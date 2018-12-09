@@ -1,0 +1,51 @@
+<app-loader [show]="loader"></app-loader>
+<div class="container-fluid pr-5 pl-5 animated fadeIn">
+  <div class="row">
+    <div class="col-12">
+      <app-breadcrumb [paginas]="['Inicio','Salas','Lista de salas']"></app-breadcrumb>
+    </div>
+  </div>
+
+  <div class="row justify-content-end">
+    <div class="col-3 mb-5  buscador">
+      <div class="d-flex align-items-center input-inmuse">
+        <div class="icon-cont p-1">
+          <i class="fa fa-search"></i>
+        </div>
+        <input class="form-control" placeholder="Buscar sala" type="text" [(ngModel)]="filtroBuscar" (keyup)="buscarSala()">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12"> 
+      <ul>
+        <li *ngFor="let sala of arrSalas;let i = index;" class="animated fadeInUp" [ngStyle]="{'animation-delay.s':(0.25*i)}">
+          <div class="img-cont">
+            <div class="overlay-desactivado" *ngIf="!sala.blnActivo" >
+              <p>Desactivado</p>
+            </div>
+            <img [src]="sala.arrayStrImagen.length > 0? sala.arrayStrImagen[0]:'assets/images/banner-2.png'" class="w-100">
+          </div>
+
+          <p class="info-item">
+           {{sala.strNombre}}
+          </p>
+
+          <div class="destacar">
+            <label class="cont">Destacar sala
+              <input type="checkbox" [(ngModel)]="sala.blnDestacadaMuseo" (change)="marcarDestacado(sala)">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+
+          <div class="acciones">
+            <button class="btn-inmuse" (click)="irEditarSala(sala)"> <i class="fa fa-pencil"></i></button>
+            <button title="Desactivar" class="btn-danger-inmuse" [ngClass]="{'desactivado' : !sala.blnActivo}" (click)="eliminarSala(sala,i)"> <i class="fa fa-power-off"></i></button>
+          </div>
+
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

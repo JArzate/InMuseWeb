@@ -1,0 +1,9 @@
+.dato-cont {
+    &:not(:last-child) {
+        margin-bottom: 15px;
+    }
+}
+
+.cont-rep{
+    width: 95%;
+}

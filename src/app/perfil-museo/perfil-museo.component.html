@@ -1,0 +1,102 @@
+<app-loader [show]="loader" ></app-loader>
+
+<div class="container-fluid pr-5 pl-5 animated fadeIn">
+  <div class="row">
+    <div class="col-12">
+      <app-breadcrumb [paginas]="['Inicio','Museo','Perfil']"></app-breadcrumb>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <form class="box-border-b" [formGroup]="form" (ngSubmit)="submit()">
+
+        <div class="d-flex justify-content-between mb-5">
+          <div class="btns">
+            <label class="file-chooser w-50">
+              <i class="fa fa-picture-o"></i> Seleccionar imagenes
+              <input type="file" accept="image/*" multiple name="imagen" #inputFiles (change)="setPreview(inputFiles)">
+            </label>
+            <small id="emailHelp" class="form-text text-muted">Es recomendable incluir al menos una imagen.</small> 
+          </div>
+
+          <ul class="img-cont w-75" [ngClass]="{'has-elements' : museo.arrayStrImagen.length > 0}" >
+            <i class="fa fa-picture-o" *ngIf="museo.arrayStrImagen.length == 0" ></i>
+            <li *ngFor="let image of museo.arrayStrImagen; let i = index;" class="animated fadeInRight" [ngStyle]="{'animation-delay.s':(0.25*i)}">
+              <button type="button" title="Remover imagen" (click)="removerImagen(i,inputFiles)" class="btn-inmuse round"><i class="fa fa-remove"></i></button>
+              <img [src]="image" class="w-100">
+            </li>
+          </ul>
+
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <div class="form-group w-45">
+            <label for="nombre-sala">Nombre</label>
+            <input type="text" class="form-control input-inmuse" [(ngModel)]="museo.strNombre"  [value]="museo.strNombre" id="nombre-sala"  placeholder="Nombre" formControlName="nombre">
+            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+          </div>
+          <div class="form-group w-45">
+             <label for="fecha-sala">Fecha</label>
+            <!--<input type="date" class="form-control input-inmuse" [(ngModel)]="museo.dteCreacion" id="fecha-sala"  placeholder="Fecha" formControlName="fecha"> -->
+            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+            <div class="d-flex">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <input class="form-control input-inmuse" [(ngModel)]="museo.dteCreacion" [value]="museo.dteCreacion" [matDatepicker]="picker" placeholder="Selecciona fecha" formControlName="fecha">
+              <mat-datepicker #picker></mat-datepicker>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Nombre del fundador</label>
+          <div *ngFor="let dato of museo.arrayStrNombreFundador; let i = index;" class="dato-cont d-flex justify-content-between align-items-center animated pulse faster">
+            <input type="text" class="form-control input-inmuse fundador" [(ngModel)]="dato" id="nombre-fundador"  [value]="dato"  placeholder="Nombre del fundador"  formControlName="fundador">
+            <div class="d-flex flex-column ">
+              <button type="button" title="Agregar dato curioso" *ngIf="(i+1) == museo.arrayStrNombreFundador.length" class="btn-inmuse"
+                (click)="agregarFundador()"> <i class="fa fa-plus"></i></button>
+              <button type="button" title="Quitar dato curioso" *ngIf="museo.arrayStrNombreFundador.length > 1" class="btn-danger-inmuse"
+                (click)="quitarFundador(i)"> <i class="fa fa-minus"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="descripcion-sala">Descripción del museo</label>
+          <textarea class="form-control input-inmuse" [(ngModel)]="museo.strDescripcion" [value]="museo.strDescripcion" cols="10" id="descripcion-sala" placeholder="Descripción de la sala" formControlName="descripcion"></textarea>
+          <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        </div>
+
+        <div class="d-flex justify-content-start">
+          <label class="file-chooser mr-5 w-25">
+            <i class="fa fa-music"></i> Cargar descripción en audio
+            <input type="file" accept="audio/*" (change)="setAudioPreview(inputAudio)" #inputAudio>
+          </label>
+
+          <audio controls *ngIf="museo.strAudioDescripcion" class="animated pulse faster">
+            <source [src]="museo.strAudioDescripcion" type="audio/ogg">
+            <source [src]="museo.strAudioDescripcion" type="audio/mp3">
+          </audio>
+
+        </div>
+
+        <div class="form-group">
+          <label>Datos curiosos</label>
+          <div *ngFor="let dato of museo.arrayStrDatosCuriosos; let i = index;" class="dato-cont d-flex justify-content-between align-items-center animated pulse faster">
+            <textarea class="form-control input-inmuse dato-curioso" cols="10" placeholder="Dato curioso" [(ngModel)]="dato" [ngModelOptions]="{standalone: true}"></textarea>
+            <div class="d-flex flex-column ">
+              <button type="button" title="Agregar dato curioso" *ngIf="(i+1) ==  museo.arrayStrDatosCuriosos.length" class="btn-inmuse"
+                (click)="agregar()"> <i class="fa fa-plus"></i></button>
+              <button type="button" title="Quitar dato curioso" *ngIf=" museo.arrayStrDatosCuriosos.length > 1" class="btn-danger-inmuse"
+                (click)="quitar(i)"> <i class="fa fa-minus"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group clearfix mt-5">
+          <button type="submit" class="btn-inmuse p-3 float-right" [ngClass]="{'btn-invalid':form.invalid}" [disabled]="form.invalid">{{!museo._id ? 'Crear museo' : 'Actualizar información'}}</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

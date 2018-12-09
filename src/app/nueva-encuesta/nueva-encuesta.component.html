@@ -1,0 +1,50 @@
+<app-loader [show]="loader"></app-loader>
+<div class="container-fluid pr-5 pl-5 animated fadeIn">
+  <div class="row">
+    <div class="col-12">
+      <app-breadcrumb [paginas]="['Inicio','Encuesta','Preguntas']"></app-breadcrumb>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <form [formGroup]="form" class="box-border-b" (ngSubmit)="submit()" >
+       
+        <div class="form-group">
+          <div *ngFor="let dato of arrPreguntas; let i = index;" class="preg dato-cont d-flex justify-content-between align-items-center animated pulse faster">
+            <div class="d-flex flex-column w-100 mb-2">
+              <label>Pregunta {{i+1}}</label>
+              <textarea class="form-control input-inmuse pregunta-encuesta" formControlName="pregunta" [name]="'pregunta['+i+']'" cols="10" placeholder="Pregunta" [(ngModel)]="dato.strPregunta"></textarea>
+              <label class="mt-3">Tipo de respuesta</label>
+              <div class="d-flex">
+                <select [ngModelOptions]="{standalone: true}" class="w-25 input-inmuse p-2 respuesta-encuesta mr-3" [name]="'respuesta['+i+']'" [(ngModel)]="dato.strTipo" (change)="clearOpciones(dato)">
+                  <option value="opcional">Opcional</option>
+                  <option value="abierta">Abierta</option>
+                </select> 
+                <input [ngModelOptions]="{standalone: true}" *ngIf="dato.strTipo == 'opcional'"  class="w-25 input-inmuse p-2" [name]="'respuesta['+i+']'" [(ngModel)]="opcion">
+                <button type="button" class="btn-inmuse ml-3" *ngIf="dato.strTipo == 'opcional'" (click)="agregarOpcion(dato)">Añadir opción</button>
+              </div>
+              <ul class="lista-respuestas" *ngIf="dato.strTipo == 'opcional'">
+                <li *ngFor="let respuesta of dato.arrayStrOpciones; let i = index;" class="animated zoomIn faster">
+                  <p>{{respuesta}}</p>
+                  <i class="fa fa-remove" (click)="removerOpcion(i,dato)"></i>
+                </li>
+              </ul>
+            </div>
+
+            <div class="d-flex flex-column ">
+              <button type="button" title="Agregar dato curioso" *ngIf="(i+1) == arrPreguntas.length" class="btn-inmuse"
+                (click)="agregar()"> <i class="fa fa-plus"></i></button>
+              <button type="button" title="Quitar dato curioso" *ngIf="arrPreguntas.length > 1" class="btn-danger-inmuse"
+                (click)="quitar(i)"> <i class="fa fa-minus"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group clearfix mt-5">
+          <button tybe="submit" class="btn-inmuse p-3 float-right" [ngClass]="{'btn-invalid':form.invalid}"  [disabled]="form.invalid"> Guardar cambios</button>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+</div>

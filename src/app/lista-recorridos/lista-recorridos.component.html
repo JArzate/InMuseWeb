@@ -1,0 +1,44 @@
+<app-loader [show]="loader"></app-loader>
+<div class="container-fluid pr-5 pl-5 animated fadeIn">
+  <div class="row">
+    <div class="col-12">
+      <app-breadcrumb [paginas]="['Inicio','Recorridos','Lista de recorridos']"></app-breadcrumb>
+    </div>
+  </div>
+
+  <div class="row justify-content-end">
+    <div class="col-3 mb-5  buscador">
+      <div class="d-flex align-items-center input-inmuse">
+        <div class="icon-cont p-1">
+          <i class="fa fa-search"></i>
+        </div>
+        <input class="form-control" placeholder="Buscar recorrido" type="text" [(ngModel)]="filtroBuscar" (keyup)="buscarRecorrido()">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12"> 
+      <table class="table table-responsive table-stripped">
+        <thead>
+          <tr>
+            <th class="col-4"> Nombre del recorrido </th>
+            <th class="col-4"> Descripción </th>
+            <th class="col-4">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let recorrido of arrRecorridos;let i = index;">          
+            <td class="col-4">
+              {{recorrido.strNombre}}
+            </td>      
+            <td class="col-4">{{recorrido.strDescripcion}}</td>    
+            <td class="acciones col-4">
+              <button class="btn-inmuse" (click)="irEditarRecorrido(recorrido)"> <i class="fa fa-pencil"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

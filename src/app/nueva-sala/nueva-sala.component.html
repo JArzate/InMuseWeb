@@ -1,0 +1,85 @@
+<app-loader [show]="loader" ></app-loader>
+
+<div class="container-fluid pr-5 pl-5 animated fadeIn">
+  <div class="row">
+    <div class="col-12">
+      <app-breadcrumb [paginas]="['Inicio','Salas',!sala._id? 'Nueva sala' : 'Editar sala']"></app-breadcrumb>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <form [formGroup]="form" class="box-border-b" (ngSubmit)="submit()" >
+        <div class="d-flex justify-content-between mb-5">
+          <div class="btns">
+            <label class="file-chooser w-50">
+              <i class="fa fa-picture-o"></i> Seleccionar imagenes
+              <input type="file" accept="image/*" multiple name="imagen" #inputFiles (change)="setPreview(inputFiles)">
+            </label>
+            <small id="emailHelp" class="form-text text-muted">Es recomendable incluir al menos una imagen.</small> 
+          </div>
+
+          <ul class="img-cont w-75" [ngClass]="{'has-elements' : sala.arrayStrImagen.length > 0}">
+            <i class="fa fa-picture-o" *ngIf="sala.arrayStrImagen.length == 0"></i>
+            <li *ngFor="let image of sala.arrayStrImagen; let i = index;" class="animated fadeInRight" [ngStyle]="{'animation-delay.s':(0.25*i)}">
+              <a title="Remover imagen" (click)="removerImagen(i,inputFiles)" class="btn-inmuse round"><i class="fa fa-remove"></i></a>
+              <img [src]="image" class="w-100">
+            </li>
+          </ul>
+
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <div class="form-group w-45">
+            <label for="nombre-sala">Nombre de la sala</label>
+            <input type="text" class="form-control input-inmuse" [(ngModel)]="sala.strNombre" id="nombre-sala" formControlName="nombre"
+              placeholder="Nombre de la sala">
+            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+          </div>
+          <!-- <div class="form-group w-45">
+            <label for="fecha-sala">Fecha</label>
+            <input type="date" class="form-control input-inmuse" name="fecha-creacion" [(ngModel)]="sala.dteCreacion" id="fecha-sala" 
+              placeholder="Nombre de la sala">             
+          </div> -->
+        </div>
+
+        <div class="form-group">
+          <label for="descripcion-sala">Descripción de la sala</label>
+          <textarea class="form-control input-inmuse" cols="10" [(ngModel)]="sala.strDescripcion" id="descripcion-sala" formControlName="descripcion" placeholder="Descripción de la sala"></textarea>
+          <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        </div>
+
+        <div class="d-flex justify-content-start">
+          <label class="file-chooser mr-5 w-25">
+            <i class="fa fa-music"></i> Cargar descripción en audio
+            <input type="file" accept="audio/*" (change)="setAudioPreview(inputAudio)" #inputAudio>
+          </label>
+
+          <audio controls *ngIf="sala.strAudioDescripcion" class="animated pulse faster">
+            <source [src]="sala.strAudioDescripcion" type="audio/ogg">
+            <source [src]="sala.strAudioDescripcion" type="audio/mp3">
+          </audio>
+
+        </div>
+
+        <div class="form-group">
+          <label>Datos curiosos</label>
+          <div *ngFor="let dato of sala.arrayStrDatosCuriosos; let i = index;" class="dato-cont d-flex justify-content-between align-items-center animated pulse faster">
+            <textarea class="form-control input-inmuse dato-curioso"  [name]="'datocurioso['+i+']'" [ngModelOptions]="{standalone: true}"
+              cols="10" placeholder="Dato curioso" [(ngModel)]="dato"></textarea>
+            <div class="d-flex flex-column ">
+              <button title="Agregar dato curioso" *ngIf="(i+1) == sala.arrayStrDatosCuriosos.length" class="btn-inmuse"
+                (click)="agregar()"> <i class="fa fa-plus"></i></button>
+              <button title="Quitar dato curioso" *ngIf="sala.arrayStrDatosCuriosos.length > 1" class="btn-danger-inmuse"
+                (click)="quitar(i)"> <i class="fa fa-minus"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group clearfix mt-5">
+          <button class="btn-inmuse p-3 float-right" [disabled]="form.invalid" [ngClass]="{'btn-invalid':form.invalid}">{{!sala._id ? 'Crear sala' : 'Actualizar sala'}}</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

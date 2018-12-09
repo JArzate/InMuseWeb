@@ -1,0 +1,50 @@
+<app-loader [show]="loader"></app-loader>
+<div class="container">
+  <div class="row">
+    <div class="col-12 position-relative">
+
+      <div class="row justify-content-end nav">
+        <div class="col-3">
+          <select class="input-inmuse form-control" (change)="filtroSalas(idSala)" [(ngModel)]="idSala">
+            <option [selected]="!idSala">Filtrar obras por sala</option>
+            <option [value]="sala._id" *ngFor="let sala of salas">{{sala.strNombre}}</option>
+          </select>
+        </div>
+        <div class="col-3 buscador">
+          <div class="d-flex align-items-center input-inmuse">
+            <div class="icon-cont p-1">
+              <i class="fa fa-search"></i>
+            </div>
+            <input class="form-control" placeholder="Buscar obra por nombre o sala" type="text" [(ngModel)]="filtroBuscar"
+              (keyup)="buscarObra()">
+          </div>
+        </div>
+        <button class="btn-danger-inmuse" [mat-dialog-close]><i class="fa fa-close"></i></button>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-12">
+          <ul>
+            <li *ngFor="let obra of arrObras; let i = index;" class="animated fadeInUp" [ngStyle]="{'animation-delay.s':(0.25*i)}"
+              [ngClass]="{'active': obra == selectedObra}" (click)="selectObra(obra)">
+              <div class="img-cont">
+                <img [src]="obra.arrayStrImagen.length > 0? obra.arrayStrImagen[0]:'assets/images/Logo_InMuse.png'"
+                  class="w-100">
+              </div>
+              <p class="info-item">
+                {{obra.strTitulo}}
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row justify-content-end footer">
+        <div class="col-4">
+          <button class="btn-inmuse p-2 w-100" [disabled]="!selectedObra" (click)="elegirObra()">Elegir obra</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

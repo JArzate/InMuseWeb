@@ -1,0 +1,128 @@
+ul {
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    li {
+        width: 23%;
+        margin: 0 1% 2% 1%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); // align-items: center;
+        .img-cont {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            img {
+                height: 250px;
+                object-fit: cover;
+                object-position: center;
+            }
+
+            .overlay-desactivado{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.75);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                p{
+                    margin: 0;
+                    font-size: 24px;
+                    font-weight: bold;
+                    color:#fff;
+                    text-transform: uppercase;
+                    z-index: 100;
+                }
+            }
+        }
+        .info-item {
+            width: 100%;
+            background: #21252d;
+            border: 1px solid #606060;
+            padding: 3% 0;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .acciones {
+            width: 100%;
+            display: flex;
+            &>button {
+                width: 50%;
+                padding: 5px 0;
+            }
+        }
+    }
+
+     .destacar{
+            transition: all 0.5s;
+            padding: 3% 0;
+        }
+}
+
+.cont {
+    transition: all 0.5s;
+    display: block;
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 1%;
+    cursor: pointer;
+    font-size: 1rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.cont input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 50%;
+    left: 3%;
+    height: 25px;
+    width: 25px;
+    background-color: #fff;
+    border: 1px solid #06465d;
+    transform: translateY(-50%);
+}
+
+.cont:hover input ~ .checkmark {
+    background-color: #06465d;
+}
+
+.cont input:checked ~ .checkmark {
+    background-color: #fff;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.cont input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.cont .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: 1px solid #06465d;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}

@@ -1,0 +1,42 @@
+.dato-cont {
+    &:not(:last-child) {
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+        border-bottom: 2px dotted #247897;
+    }
+    .pregunta-encuesta {
+        width: 95%;
+    }
+}
+
+.lista-respuestas{
+    margin-top: 2%;
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: 0;
+    li{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-width: 50px;
+        margin-right: 3%;
+        margin-bottom: 1%;
+
+        border: 1px solid #06465d;
+        border-radius: 5px;
+        background: #cdcdcd;
+        color:darkslategrey;
+
+        padding: 10px; 
+
+        p{
+            margin: 0 15px 0 0;
+            padding: 0;
+        }
+
+        i{
+           cursor: pointer;
+        }
+    }
+}

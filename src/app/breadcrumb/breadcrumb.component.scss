@@ -1,0 +1,26 @@
+ul{
+    display: flex;
+    border: 1px solid rgba(36, 120, 151, 1);
+    padding: 10px;
+    list-style-type: none;
+    margin-bottom: 3%;
+    li{
+        a{
+            display: block;
+            text-decoration: none;
+            color: rgba(36, 120, 151, 1);
+        }
+
+        &:not(:last-child) a:after{
+            content: '\f105';
+            font-family: fontAwesome;
+            padding: 0 10px;
+        }
+
+        &:last-child{
+            a{
+                font-weight: bold;                
+            }
+        }
+    }
+}

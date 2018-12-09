@@ -1,0 +1,55 @@
+<app-loader [show]="loader"></app-loader>
+
+<div class="container-fluid pr-5 pl-5 animated fadeIn">
+  <div class="row">
+    <div class="col-12">
+      <app-breadcrumb [paginas]="['Inicio','Recorrido', recorrido._id? 'Editar':'Nuevo']"></app-breadcrumb>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <form  class="box-border-b" [formGroup]="form" (ngSubmit)="submit()" >
+        <p class="text-muted">
+          ¡Es hora de jugar!. Aquí podrás crear diversos recorridos para los visitantes de un manera divertida.
+          Agrega pistas, un puntaje por cada una y selecciona la obra que será la respuesta.
+        </p>
+        <div class="form-group">
+          <label for="titulo-recorrido">Título del recorrido</label>
+          <input class="form-control input-inmuse" type="text" [(ngModel)]="recorrido.strNombre" id="titulo-recorrido" placeholder="Título del recorrido" formControlName="nombre">
+        </div>
+
+        <div class="form-group">
+          <label>Pistas</label>
+          <div *ngFor="let dato of recorrido.arrayModeloPista; let i = index;" class="dato-cont d-flex flex-column animated pulse faster">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex flex-column cont-rep">
+                <textarea class="form-control input-inmuse dato-curioso w-100" cols="10" placeholder="Pista"
+                [value]="dato.strPista" formControlName="pista" name="pista"></textarea>
+                <input type="number" name="puntaje" placeholder="Puntaje por esta pista" [value]="dato.intPuntos" class="input-inmuse form-control w-100" formControlName="puntos">
+              </div>
+              <div class="d-flex flex-column ">
+                <button type="button" title="Agregar pista" *ngIf="(i+1) == recorrido.arrayModeloPista.length" class="btn-inmuse" (click)="agregar()">
+                  <i class="fa fa-plus"></i></button>
+                <button type="button" title="Quitar pista" *ngIf="recorrido.arrayModeloPista.length > 1" class="btn-danger-inmuse" (click)="quitar(i)">
+                  <i class="fa fa-minus"></i></button>
+              </div>
+            </div>
+            <div class="d-flex align-items-center mb-3  mt-3">
+              <button type="button" class="btn-inmuse w-25 mr-3" (click)="abrirModal(dato)" *ngIf="!dato.strIdObra" >Elegir obra</button>
+            </div>            
+          </div>
+        </div>
+
+        <div class="form-group">
+            <label for="titulo-recorrido">Descripción</label>
+            <textarea class="form-control input-inmuse" type="text" id="titulo-recorrido" [(ngModel)]="recorrido.strDescripcion" placeholder="Descripción del recorrido" [ngModelOptions]="{standalone: true}"></textarea>
+          </div>
+
+        <div class="form-group clearfix mt-5">
+          <button type="submit" class="btn-inmuse p-3 float-right"  [ngClass]="{'btn-invalid':form.invalid}"> {{recorrido._id? 'Editar recorrido':'Crear recorrido'}}</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

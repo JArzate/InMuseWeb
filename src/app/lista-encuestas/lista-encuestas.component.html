@@ -1,0 +1,49 @@
+<app-loader [show]="loader"></app-loader>
+<div class="container-fluid pr-5 pl-5 animated fadeIn">
+    <div class="row">
+      <div class="col-12">
+        <app-breadcrumb [paginas]="['Inicio','Encuestas','Lista de encuestas']"></app-breadcrumb>
+      </div>
+    </div>
+  
+    <div class="row justify-content-end">
+      <div class="col-3 mb-5  buscador form-group">
+        <label> Fecha de inicio</label>
+        <div class="d-flex align-items-center input-inmuse">
+          <div class="icon-cont p-1">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <input class="form-control" placeholder="Filtrar por fecha" type="date" [(ngModel)]="filtroFechaInicio" (change)="filtrarEncuestas()">
+        </div>
+      </div>
+      <div class="col-3 mb-5  buscador form-group">
+        <label> Fecha final</label>
+        <div class="d-flex align-items-center input-inmuse">
+          <div class="icon-cont p-1">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <input class="form-control" placeholder="Filtrar por fecha" type="date" [(ngModel)]="filtroFechaFin" (change)="filtrarEncuestas()">
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-12">
+        <ul class="comentarios">
+          <li *ngFor="let feedback of arrayFeedBack;let i = index;" class="animated fadeInRight comentario" [ngStyle]="{'animation-delay.s':(0.25*i)}">
+            <div class="info-cont">
+              
+              <ul class="d-flex w-25" >
+                <li class="mr-2" *ngFor="let pregunta of feedback.arrayPreguntas; let j = index;">
+                  <p class="pregunta">{{ (j+1) + '.- ' +pregunta.strPregunta}}</p>
+                  <p class="respuesta">{{pregunta.strRespuesta}}</p>
+                </li>                
+              </ul>
+
+              <small class="form-text text-muted text-right">{{feedback.dteCreacion | date:'short'}}</small>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>

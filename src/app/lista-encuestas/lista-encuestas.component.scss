@@ -1,0 +1,32 @@
+.comentarios {
+    padding: 0;
+    list-style: none;
+    
+    .comentario {
+        background: rgba(0, 0, 0, 0.01);
+        border: 1px solid #272b35;
+        padding: 1%;
+        margin-bottom: 2%;
+        ul {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            list-style: none;
+            font-size: 18px;
+            li{
+                margin-bottom: 3%;
+            }
+        }
+    }
+}
+
+.pregunta{
+    margin: 0;
+    font-weight: bold;
+}
+
+.respuesta{
+    margin: 0;
+    margin-left: 10%;
+
+}

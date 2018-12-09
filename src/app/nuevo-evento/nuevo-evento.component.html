@@ -1,0 +1,60 @@
+<app-loader [show]="loader" ></app-loader>
+
+<div class="container-fluid pr-5 pl-5 animated fadeIn">
+  <div class="row">
+    <div class="col-12">
+      <app-breadcrumb [paginas]="['Inicio','Eventos',!evento._id ? 'Nuevo evento' : 'Editar evento']"></app-breadcrumb>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <form class="box-border-b" [formGroup]="form" (ngSubmit)="submit()">
+
+        <div class="d-flex justify-content-between mb-5">
+          <div class="btns">
+            <label class="file-chooser w-50">
+              <i class="fa fa-picture-o"></i> Seleccionar imagenes
+              <input type="file" accept="image/*" multiple name="imagen" #inputFiles (change)="setPreview (inputFiles)">
+            </label>
+            <small id="emailHelp" class="form-text text-muted">Es recomendable incluir al menos una imagen.</small> 
+          </div>
+
+          <ul class="img-cont w-75" [ngClass]="{'has-elements' :  evento.arrayStrImagen.length > 0}">
+            <i class="fa fa-picture-o" *ngIf="evento.arrayStrImagen.length == 0"></i>
+            <li *ngFor="let image of evento.arrayStrImagen; let i = index;" class="animated fadeInRight" [ngStyle]="{'animation-delay.s':(0.25*i)}">
+              <a title="Remover imagen" (click)="removerImagen(i,inputFiles)" class="btn-inmuse round"><i class="fa fa-remove"></i></a>
+              <img [src]="image" class="w-100">
+            </li>
+          </ul>
+
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <div class="form-group w-45">
+            <label for="nombre-sala">Título del evento</label>
+            <input type="text" class="form-control input-inmuse" [(ngModel)]="evento.strNombre" [value]="evento.strNombre" id="nombre-sala" formControlName="nombre"
+              placeholder="Título del evento">
+          </div>
+          <div class="form-group w-45">
+            <label for="fecha-sala">Fecha de creación</label>
+            <div class="d-flex">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <input class="form-control input-inmuse" [(ngModel)]="evento.dteCreacion" [value]="evento.dteCreacion" [matDatepicker]="picker" formControlName="fecha" placeholder="Selecciona fecha">
+                <mat-datepicker #picker></mat-datepicker>
+              </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="descripcion-sala">Descripción del evento</label>
+          <textarea class="form-control input-inmuse" name="descripcion-obra" cols="20" [(ngModel)]="evento.strDescripcion" id="descripcion-sala" placeholder="Descripción del evento " formControlName="descripcion"></textarea>
+        </div>
+           
+        <div class="form-group clearfix mt-5">
+            <button class="btn-inmuse p-3 float-right" [disabled]="form.invalid" [ngClass]="{'btn-invalid':form.invalid}">{{!evento._id ? 'Crear evento' : 'Actualizar sala'}}</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

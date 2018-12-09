@@ -1,0 +1,105 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~animate.css/animate.min.css';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+html,body{
+    font-size: 16px;
+    font-family: Fira Sans;
+}
+
+.btn-inmuse{
+    cursor: pointer;
+    background-color: #06465d;
+    border:1px solid #06465d;
+    color:#fff;
+    transition: all 0.5s;
+
+    &:hover{
+        background: #247897;
+    }
+
+    &.round{
+        border-radius: 50%;
+        height: 30px;
+        width: 30px;
+
+        i{
+            color:#fff;
+        }
+    }
+}
+
+.btn-danger-inmuse{
+    cursor: pointer;
+    background-color: crimson;
+    border:1px solid crimson;
+    color:#fff;
+    transition: all 0.5s;
+    &:hover{
+        background: darkred;
+    }
+
+    &.desactivado {
+        background: darkred;
+    }
+}
+
+.btn-invalid{
+    border: none;   
+    background: #cdcdcd !important;
+    cursor: not-allowed;
+}
+
+.btn-dark-inmuse{
+    cursor: pointer;
+    background-color: #21252d;
+    border:1px solid #21252d;
+    color:#fff;
+    transition: all 0.5s;
+    &:hover{
+        background: #272b35;
+    }
+}
+
+.input-inmuse{
+    font-size: 1rem;
+    border-radius: 0;
+    border: 1px solid #06465d;
+    color:#06465d;
+    background: rgba(255,255,255,0.5);
+
+    .icon-cont{
+        width: 15%;
+    }
+    .form-control{
+        width: 85%;
+    }
+}
+
+.buscador{
+    input{
+        border: none;
+
+        &:focus{
+            border-color: transparent;
+            box-shadow:none;
+            outline: 0 none;
+        }
+    }
+}
+
+.w-45{
+    width: 45%;
+}
+
+
+.box-border-b{
+    box-sizing: border-box;
+}
+
+textarea{
+    min-height: 150px;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

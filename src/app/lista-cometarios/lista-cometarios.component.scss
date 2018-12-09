@@ -1,0 +1,22 @@
+.comentarios {
+    padding: 0;
+    list-style: none;
+    
+    .comentario {
+        background: rgba(0, 0, 0, 0.01);
+        border: 1px solid #272b35;
+        padding: 1%;
+        margin-bottom: 2%;
+        .comment {
+            font-size: 1.05em;
+        }
+
+        .emocion {
+            font-weight: bold;
+            span {
+                font-weight: normal;
+            }
+        }
+
+    }
+}

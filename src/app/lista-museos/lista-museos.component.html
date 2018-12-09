@@ -1,0 +1,41 @@
+<app-loader [show]="loader"></app-loader>
+<div class="container-fluid pr-5 pl-5 animated fadeIn">
+  <div class="row">
+    <div class="col-12">
+      <app-breadcrumb [paginas]="['Inicio','Museos','Lista de museos']"></app-breadcrumb>
+    </div>
+  </div>
+
+  <div class="row justify-content-end">
+    <div class="col-3 mb-5  buscador">
+      <div class="d-flex align-items-center input-inmuse">
+        <div class="icon-cont p-1">
+          <i class="fa fa-search"></i>
+        </div>
+        <input class="form-control" placeholder="Buscar museo" type="text" [(ngModel)]="filtroBuscar" (keyup)="buscarMuseo()">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12"> 
+      <ul>
+        <li *ngFor="let museo of arrMuseos;let i = index;" class="animated fadeInUp" [ngStyle]="{'animation-delay.s':(0.25*i)}">
+          <div class="img-cont">
+            <img [src]="museo.arrayStrImagen.length > 0? museo.arrayStrImagen[0]:'assets/images/banner-2.png'" class="w-100">
+          </div>
+
+          <p class="info-item">
+           {{museo.strNombre}}
+          </p>
+          
+          <div class="acciones">
+            <button class="btn-inmuse" (click)="irEditarMuseo(museo)"> <i class="fa fa-pencil"></i></button>
+            <button class="btn-danger-inmuse" title="Desactivar" (click)="eliminarMuseo(museo,i)"><i class="fa fa-power-off"></i></button>
+          </div>
+
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

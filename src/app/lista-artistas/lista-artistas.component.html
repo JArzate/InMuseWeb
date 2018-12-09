@@ -1,0 +1,52 @@
+<app-loader [show]="loader"></app-loader>
+<div class="container-fluid pr-5 pl-5 animated fadeIn">
+  <div class="row">
+    <div class="col-12">
+      <app-breadcrumb [paginas]="['Inicio','Artistas','Lista de artistas']"></app-breadcrumb>
+    </div>
+  </div>
+
+  <div class="row justify-content-end">
+    <div class="col-3 mb-5  buscador">
+      <div class="d-flex align-items-center input-inmuse">
+        <div class="icon-cont p-1">
+          <i class="fa fa-search"></i>
+        </div>
+        <input class="form-control" placeholder="Buscar artista por nombre o sala" type="text" [(ngModel)]="filtroBuscar"
+          (keyup)="buscarArtista()">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <ul>
+        <li *ngFor="let artista of arrArtistas; let i = index;" class="animated fadeInUp" [ngStyle]="{'animation-delay.s':(0.25*i)}">
+          <div class="img-cont">
+              <div class="overlay-desactivado" *ngIf="!artista.blnActivo" >
+                  <p>Desactivado</p>
+                </div>
+            <img [src]="artista.arrayStrImagen.length > 0? artista.arrayStrImagen[0]:'assets/images/Logo_InMuse.png'" class="w-100">
+          </div>
+
+          <p class="info-item">
+            {{artista.strNombre}}
+          </p>
+
+          <div class="destacar">
+            <label class="cont">Destacar nivel museo
+              <input type="checkbox" [(ngModel)]="artista.blnDestacadaMuseo" (change)="marcarDestacado(artista)">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          
+          <div class="acciones">
+            <button class="btn-inmuse" (click)="irEditarArtista(artista)" title="Editar artista"> <i class="fa fa-pencil"></i></button>
+            <button class="btn-danger-inmuse desactivado" [ngClass]="{'desactivado' : !artista.blnActivo}" (click)="eliminarArtista(artista,i)" title="Desactivar"> <i class="fa fa-power-off"></i></button>
+          </div>
+
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

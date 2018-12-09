@@ -1,0 +1,96 @@
+var pregunta = Joi.object().keys({
+    strPregunta: Joi.string().required(),
+    strRespuesta: Joi.string().required()
+}).required();
+
+var feedback = Joi.object().keys({
+    _id: Joi.string().min(24),
+    intCalificacion: Joi.string(),
+    strComentario: Joi.string(),
+    strEmocion: Joi.string(),
+    arrayPreguntas: Joi.array().items(pregunta)
+}).required();
+
+var artista = Joi.object().keys({
+    _id: Joi.string().min(24),
+    strNombre: Joi.string(),
+    dteNacimiento: Joi.date(),
+    arrayStrDatosCuriosos: Joi.array().items(Joi.string()),
+    arrayStrImagen: Joi.array().items(Joi.string()),
+    strAudioDescripcion: Joi.string(),
+    blnActivo: Joi.boolean()
+}).required();
+
+var obra = Joi.object().keys({
+    _id: Joi.string().min(24),
+    strIdSala: Joi.string(),
+    strTitulo: Joi.string(),
+    arrayStrIdArtista: Joi.array().items(Joi.string()),
+    strDescripcion: Joi.string(),
+    strAudioDescripcion: Joi.string(),
+    strCorrienteArtistica: Joi.string(),
+    strTiempoHistorico: Joi.string(),
+    strMaterial: Joi.string(),
+    arrayStrDatosCuriosos: Joi.array().items(Joi.string()),
+    dteCreacion: Joi.date(),
+    arrayStrImagen: Joi.array().items(Joi.string()),
+    arrayStrIdFeedback: Joi.array().items(Joi.string()),
+    blnActivo: Joi.boolean()
+}).required();
+
+// Campos en front
+// arrayModeloArtista
+// arrayModeloObra
+var sala = Joi.object().keys({
+    _id: Joi.string().min(24),
+    strIdMuseo: Joi.string(),
+    strNombre: Joi.string(),
+    strDescripcion: Joi.string(),
+    strAudioDescripcion: Joi.string(),
+    dteCreacion: Joi.date(),
+    arrayStrDatosCuriosos: Joi.array().items(Joi.string()),
+    arrayStrImagen: Joi.array().items(Joi.string()),
+    arrayStrIdFeedback: Joi.array().items(Joi.string()),
+    blnActivo: Joi.boolean()
+}).required();
+
+// Campos en front
+// arrayModeloObra
+// arrayModeloArtista
+var museo = Joi.object().keys({
+    _id: Joi.string().min(24),
+    strNombre: Joi.string(),
+    strDescripcion: Joi.string(),
+    strAudioDescripcion: Joi.string(),
+    dteCreacion: Joi.date(),
+    arrayStrNombreFundador: Joi.array().items(Joi.string()),
+    arrayStrDatosCuriosos: Joi.array().items(Joi.string()),
+    arrayStrImagen: Joi.array().items(Joi.string()),
+    arrayStrIdFeedback: Joi.array().items(Joi.string()),
+    arrayStrIdObra: Joi.array().items(Joi.string()),
+    arrayStrIdArtista: Joi.array().items(Joi.string()),
+    blnActivo: Joi.boolean()
+}).required();
+
+var usuario = Joi.object().keys({
+    _id: Joi.string().min(24),
+    strNombre: Joi.string(),
+    strApellido: Joi.string(),
+    strCorreo: Joi.string(),
+    dteNacimiento: Joi.date(),
+    strPassword: Joi.string(),
+    intPuntaje: Joi.number()
+}).required();
+
+var motivoVisita = Joi.object().keys({
+    strOrigen: Joi.string(),
+    intEdad: Joi.number(),
+    strMotivo: Joi.string()
+}).required();
+
+var reporte = Joi.object().keys({
+    _id: Joi.string(),
+    strIdMuseo: Joi.string(),
+    arrayTmspVisita: Joi.array().items(Joi.date()),
+    arrayModeloMotivoVisita: Joi.array().items(motivoVisita)
+}).required();

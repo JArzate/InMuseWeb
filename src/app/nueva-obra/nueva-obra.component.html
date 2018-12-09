@@ -1,0 +1,121 @@
+<app-loader [show]="loader"></app-loader>
+
+<div class="container-fluid pr-5 pl-5 animated fadeIn">
+  <div class="row">
+    <div class="col-12">
+      <app-breadcrumb [paginas]="['Inicio','Obras',!obra._id ? 'Nueva obra' : 'Editar obra']"></app-breadcrumb>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <form class="box-border-b" [formGroup]="form" (ngSubmit)="submit()">
+
+        <div class="d-flex justify-content-between mb-5">
+          <div class="btns">
+            <label class="file-chooser w-50">
+              <i class="fa fa-picture-o"></i> Seleccionar imagenes
+              <input type="file" accept="image/*" multiple name="imagen" #inputFiles (change)="setPreview(inputFiles)">
+            </label>
+            <small id="emailHelp" class="form-text text-muted mb-3">Es recomendable incluir al menos una imagen.</small>
+
+            <qrcode [qrdata]="QRString" [size]="256" [level]="'M'" *ngIf="QRString" ></qrcode>
+            <small *ngIf="QRString" >Es importante guardar este código QR.</small>
+          </div>
+
+          <ul class="img-cont w-75" [ngClass]="{'has-elements' :  obra.arrayStrImagen.length > 0}">
+            <i class="fa fa-picture-o" *ngIf="obra.arrayStrImagen.length == 0"></i>
+            <li *ngFor="let image of obra.arrayStrImagen; let i = index;" class="animated fadeInRight" [ngStyle]="{'animation-delay.s':(0.25*i)}">
+              <a title="Remover imagen" (click)="removerImagen(i,inputFiles)" class="btn-inmuse round"><i class="fa fa-remove"></i></a>
+              <img [src]="image" class="w-100">
+            </li>
+          </ul>
+
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <div class="form-group w-45">
+            <label for="nombre-sala">Título de la obra</label>
+            <input type="text" class="form-control input-inmuse" [(ngModel)]="obra.strTitulo" id="nombre-sala"
+              formControlName="nombre" placeholder="Nombre de la obra">
+          </div>
+          <div class="form-group w-45">
+            <label for="fecha-sala">Fecha</label>
+            <div class="d-flex">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <input class="form-control input-inmuse" [(ngModel)]="obra.dteCreacion" [value]="obra.dteCreacion"
+                [matDatepicker]="picker" placeholder="Selecciona fecha" formControlName="fecha">
+              <mat-datepicker #picker></mat-datepicker>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between">
+
+          <div class="form-group  w-45">
+            <label for="artista">Artista</label>
+            <div *ngFor="let dato of obra.arrayStrIdArtista; let i = index;" class="dato-cont d-flex justify-content-between align-items-center animated pulse faster">                
+              <select class="form-control input-inmuse" [value]="dato" formControlName="artista" #selectArtista (change)="findArtista(selectArtista,i)">
+                  <option [value]="artista._id" *ngFor="let artista of artistas"> {{artista.strNombre}}</option>
+              </select>
+              <div class="d-flex flex-column">
+                <button type="button" title="Agregar artista" *ngIf="(i+1) == obra.arrayStrIdArtista.length"
+                  class="btn-inmuse" (click)="agregarArtista()"> <i class="fa fa-plus"></i></button>
+                <button type="button" title="Quitar artista" class="btn-danger-inmuse" *ngIf="obra.arrayStrIdArtista.length > 1"
+                  (click)="quitarArtista(i)"> <i class="fa fa-minus"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group w-45">
+            <label for="descripcion-sala">Sala</label>
+            <select class="form-control input-inmuse w-100" cols="20" [(ngModel)]="obra.strIdSala" [value]="obra.strIdSala" id="descripcion-sala"
+              formControlName="sala">
+              <option>Selecciona la sala a la que pertenece esta obra</option>
+              <option [value]="sala._id" *ngFor="let sala of salas">{{sala.strNombre}}</option>
+            </select>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="descripcion-sala">Descripción de la obra</label>
+          <textarea class="form-control input-inmuse" name="descripcion-obra" cols="20" [(ngModel)]="obra.strDescripcion"
+            id="descripcion-sala" placeholder="Descripción de la obra" formControlName="descripcion"></textarea>
+        </div>
+
+        <div class="d-flex justify-content-start">
+          <label class="file-chooser mr-5 w-25">
+            <i class="fa fa-music"></i> Cargar descripción en audio
+            <input type="file" accept="audio/*" (change)="setAudioPreview(inputAudio)" #inputAudio>
+          </label>
+
+          <audio controls *ngIf="obra.strAudioDescripcion" class="animated pulse faster">
+            <source [src]="obra.strAudioDescripcion" type="audio/ogg">
+            <source [src]="obra.strAudioDescripcion" type="audio/mp3">
+          </audio>
+
+        </div>
+
+        <div class="form-group">
+          <label>Datos curiosos</label>
+          <div *ngFor="let dato of obra.arrayStrDatosCuriosos; let i = index;" class="dato-cont d-flex justify-content-between align-items-center animated pulse faster">
+            <textarea class="form-control input-inmuse dato-curioso" [ngModelOptions]="{standalone: true}" placeholder="Dato curioso"
+              [(ngModel)]="dato"></textarea>
+            <div class="d-flex flex-column ">
+              <button type="button" title="Agregar dato curioso" *ngIf="(i+1) == obra.arrayStrDatosCuriosos.length"
+                class="btn-inmuse" (click)="agregar()"> <i class="fa fa-plus"></i></button>
+              <button type="button" title="Quitar dato curioso" class="btn-danger-inmuse" *ngIf="obra.arrayStrDatosCuriosos.length > 1"
+                (click)="quitar(i)"> <i class="fa fa-minus"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group clearfix mt-5">
+          <button type="submit" class="btn-inmuse p-3 float-right" >
+            {{!obra._id? 'Crear obra' : 'Actualizar obra'}}</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
